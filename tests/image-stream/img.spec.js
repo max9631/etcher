@@ -40,13 +40,14 @@ describe('ImageStream: IMG', function() {
 
   describe('.getImageMetadata()', function() {
 
-    it('should return the correct metadata', function(done) {
+    it('should return the correct metadata', function() {
       const image = path.join(IMAGES_PATH, 'raspberrypi.img');
       const expectedSize = fs.statSync(image).size;
 
-      imageStream.getImageMetadata(image).then((metadata) => {
+      return imageStream.getImageMetadata(image).then((metadata) => {
         m.chai.expect(metadata).to.deep.equal({
           path: image,
+          stream: null,
           size: {
             original: expectedSize,
             final: {
@@ -55,7 +56,6 @@ describe('ImageStream: IMG', function() {
             }
           }
         });
-        done();
       });
     });
 

@@ -65,13 +65,14 @@ describe('ImageStream: ZIP', function() {
 
   describe('.getImageMetadata()', function() {
 
-    it('should return the correct metadata', function(done) {
+    it('should return the correct metadata', function() {
       const image = path.join(ZIP_PATH, 'zip-directory-rpi-only.zip');
       const expectedSize = fs.statSync(path.join(IMAGES_PATH, 'raspberrypi.img')).size;
 
-      imageStream.getImageMetadata(image).then((metadata) => {
+      return imageStream.getImageMetadata(image).then((metadata) => {
         m.chai.expect(metadata).to.deep.equal({
           path: image,
+          stream: null,
           size: {
             original: expectedSize,
             final: {
@@ -80,7 +81,6 @@ describe('ImageStream: ZIP', function() {
             }
           }
         });
-        done();
       });
     });
 
